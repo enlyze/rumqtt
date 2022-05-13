@@ -480,6 +480,8 @@ pub struct MqttOptions {
     proxy: Option<Proxy>,
     #[cfg(feature = "websocket")]
     request_modifier: Option<RequestModifierFn>,
+    /// the protocol. Should be `Protocol::V3` or `Protocol::V4`.
+    protocol: Protocol,
 }
 
 impl MqttOptions {
@@ -513,6 +515,7 @@ impl MqttOptions {
             proxy: None,
             #[cfg(feature = "websocket")]
             request_modifier: None,
+            protocol: Protocol::V4,
         }
     }
 
@@ -727,6 +730,20 @@ impl MqttOptions {
     #[cfg(feature = "websocket")]
     pub fn request_modifier(&self) -> Option<RequestModifierFn> {
         self.request_modifier.clone()
+    }
+    /// set the protocol.
+    ///
+    /// # Panics
+    ///
+    /// Panics if `protocol` is not `Protocol::V3` or `Protocol::V4`.
+    pub fn set_protocol(&mut self, protocol: Protocol) {
+        assert!(matches!(protocol, Protocol::V3 | Protocol::V4));
+        self.protocol = protocol;
+    }
+
+    /// get the protocol
+    pub fn protocol(&self) -> Protocol {
+        self.protocol
     }
 }
 

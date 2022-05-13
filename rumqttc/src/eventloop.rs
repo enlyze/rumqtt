@@ -486,7 +486,7 @@ async fn mqtt_connect(
     options: &MqttOptions,
     network: &mut Network,
 ) -> Result<ConnAck, ConnectionError> {
-    let mut connect = Connect::new(options.client_id());
+    let mut connect = Connect::new(options.protocol, options.client_id());
     connect.keep_alive = options.keep_alive().as_secs() as u16;
     connect.clean_session = options.clean_session();
     connect.last_will = options.last_will();
