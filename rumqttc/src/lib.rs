@@ -426,6 +426,8 @@ pub struct MqttOptions {
     /// If set to `true` MQTT acknowledgements are not sent automatically.
     /// Every incoming publish packet must be manually acknowledged with `client.ack(...)` method.
     manual_acks: bool,
+    /// the protocol. Should be `Protocol::V3` or `Protocol::V4`.
+    protocol: Protocol,
 }
 
 impl MqttOptions {
@@ -466,6 +468,7 @@ impl MqttOptions {
             inflight: 100,
             last_will: None,
             manual_acks: false,
+            protocol: Protocol::V4,
         }
     }
 
@@ -634,6 +637,21 @@ impl MqttOptions {
     /// get manual acknowledgements
     pub fn manual_acks(&self) -> bool {
         self.manual_acks
+    }
+
+    /// set the protocol.
+    ///
+    /// # Panics
+    ///
+    /// Panics if `protocol` is not `Protocol::V3` or `Protocol::V4`.
+    pub fn set_protocol(&mut self, protocol: Protocol) {
+        assert!(matches!(protocol, Protocol::V3 | Protocol::V4));
+        self.protocol = protocol;
+    }
+
+    /// get the protocol
+    pub fn protocol(&self) -> Protocol {
+        self.protocol
     }
 }
 
