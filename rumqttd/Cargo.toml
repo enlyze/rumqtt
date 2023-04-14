@@ -10,33 +10,34 @@ categories = ["network-programming"]
 repository = "https://github.com/bytebeamio/rumqtt/"
 
 [dependencies]
-tokio = { version = "1.0", features = ["rt", "time", "net", "io-util", "macros"]}
-serde = { version = "1.0.125", features = ["derive"] }
-serde_json = "1.0.66"
+tokio = { version = "1.27", features = ["rt", "time", "net", "io-util", "macros"]}
+serde = { version = "1.0.160", features = ["derive"] }
+serde_json = "1.0.96"
 bytes = { version = "1", features = ["serde"] }
-flume = "0.10.9"
-slab = "0.4.3"
-thiserror = "1.0.24"
+flume = "0.10.14"
+slab = "0.4.8"
+thiserror = "1.0.40"
 tokio-util = { version = "0.7", features = ["codec"], optional = true }
-tokio-rustls =  { version = "0.23.0", optional = true }
+tokio-rustls =  { version = "0.24.0", optional = true }
 tokio-native-tls = { version = "0.3", optional = true }
 rustls-pemfile = { version = "1", optional = true }
-tokio-tungstenite = { version = "0.15.0", optional = true }
-websocket-codec = { version = "0.5.1", optional = true }
-x509-parser = {version= "0.9.2", optional = true}
-futures-util = { version = "0.3.16", optional = true}
-parking_lot = "0.11.2"
+rustls-webpki = { version = "0.100.1", optional = true }
+tokio-tungstenite = { version = "0.18.0", optional = true }
+websocket-codec = { version = "0.5.2", optional = true }
+x509-parser = {version= "0.15.0", optional = true}
+futures-util = { version = "0.3.28", optional = true}
+parking_lot = "0.12.1"
 config = "0.13"
 tracing = { version="0.1", features=["log"] }
 tracing-subscriber = { version="0.3.16", features=["env-filter"] }
 metrics = "0.20.1"
 metrics-exporter-prometheus = "0.11.0"
-clap = { version = "4.1.4", features = ["derive"] }
-axum = "0.6.4"
+clap = { version = "4.2.2", features = ["derive"] }
+axum = "0.6.15"
 
 [features]
 default = ["use-rustls"]
-use-rustls = ["dep:tokio-rustls", "dep:rustls-pemfile", "dep:x509-parser"]
+use-rustls = ["dep:tokio-rustls", "dep:rustls-pemfile", "dep:x509-parser", "dep:rustls-webpki"]
 use-native-tls = ["dep:tokio-native-tls", "dep:x509-parser"]
 websockets = ["dep:tokio-tungstenite", "dep:websocket-codec", "dep:tokio-util", "dep:futures-util"]
 validate-tenant-prefix = []
